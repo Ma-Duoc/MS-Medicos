@@ -20,7 +20,6 @@ public class MedicoDTO {
     private String especialidad;
     private String email;
     private String telefono;
-    private Boolean activo;
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaActualizacion;
 }

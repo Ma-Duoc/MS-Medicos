@@ -36,24 +36,13 @@ public class Medico {
     private String email;
     
     private String telefono;
-    
-    @Column(nullable = false)
-    private Boolean activo = true;
+
     
     @Column(name = "fecha_creacion")
     private LocalDateTime fechaCreacion;
     
     @Column(name = "fecha_actualizacion")
     private LocalDateTime fechaActualizacion;
-    
-    @PrePersist
-    public void prePersist() {
-        fechaCreacion = LocalDateTime.now();
-        fechaActualizacion = LocalDateTime.now();
-        if (activo == null) {
-            activo = true;
-        }
-    }
     
     @PreUpdate
     public void preUpdate() {

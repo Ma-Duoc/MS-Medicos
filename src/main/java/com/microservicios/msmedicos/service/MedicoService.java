@@ -24,13 +24,6 @@ public class MedicoService {
                 .collect(Collectors.toList());
     }
     
-    public List<MedicoDTO> findByActivo(Boolean activo) {
-        return medicoRepository.findByActivo(activo)
-                .stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
-    }
-    
     public Optional<MedicoDTO> findById(Long id) {
         return medicoRepository.findById(id)
                 .map(this::convertToDTO);
@@ -119,7 +112,6 @@ public class MedicoService {
                     existingMedico.setApellido(medicoDTO.getApellido());
                     existingMedico.setEspecialidad(medicoDTO.getEspecialidad());
                     existingMedico.setTelefono(medicoDTO.getTelefono());
-                    existingMedico.setActivo(medicoDTO.getActivo());
                     
                     Medico updatedMedico = medicoRepository.save(existingMedico);
                     return convertToDTO(updatedMedico);
@@ -146,23 +138,6 @@ public class MedicoService {
         return medicoRepository.existsByEmail(email);
     }
     
-    public Optional<MedicoDTO> desactivar(Long id) {
-        return medicoRepository.findById(id)
-                .map(existingMedico -> {
-                    existingMedico.setActivo(false);
-                    Medico updatedMedico = medicoRepository.save(existingMedico);
-                    return convertToDTO(updatedMedico);
-                });
-    }
-    
-    public Optional<MedicoDTO> activar(Long id) {
-        return medicoRepository.findById(id)
-                .map(existingMedico -> {
-                    existingMedico.setActivo(true);
-                    Medico updatedMedico = medicoRepository.save(existingMedico);
-                    return convertToDTO(updatedMedico);
-                });
-    }
     
     private MedicoDTO convertToDTO(Medico medico) {
         return MedicoDTO.builder()
@@ -173,7 +148,6 @@ public class MedicoService {
                 .especialidad(medico.getEspecialidad())
                 .email(medico.getEmail())
                 .telefono(medico.getTelefono())
-                .activo(medico.getActivo())
                 .fechaCreacion(medico.getFechaCreacion())
                 .fechaActualizacion(medico.getFechaActualizacion())
                 .build();
@@ -188,7 +162,6 @@ public class MedicoService {
                 .especialidad(dto.getEspecialidad())
                 .email(dto.getEmail())
                 .telefono(dto.getTelefono())
-                .activo(dto.getActivo())
                 .build();
     }
 }

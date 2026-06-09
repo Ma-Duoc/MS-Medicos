@@ -14,7 +14,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/medicos")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class MedicoController {
 
     private final MedicoService medicoService;
@@ -25,22 +24,6 @@ public class MedicoController {
     @GetMapping
     public ResponseEntity<List<MedicoDTO>> getAllMedicos() {
         return ResponseEntity.ok(medicoService.findAll());
-    }
-
-    // =========================
-    // GET ACTIVOS
-    // =========================
-    @GetMapping("/activos")
-    public ResponseEntity<List<MedicoDTO>> getMedicosActivos() {
-        return ResponseEntity.ok(medicoService.findByActivo(true));
-    }
-
-    // =========================
-    // GET INACTIVOS
-    // =========================
-    @GetMapping("/inactivos")
-    public ResponseEntity<List<MedicoDTO>> getMedicosInactivos() {
-        return ResponseEntity.ok(medicoService.findByActivo(false));
     }
 
     // =========================
@@ -117,29 +100,5 @@ public class MedicoController {
         }
     }
 
-    // =========================
-    // DESACTIVAR
-    // =========================
-    @PutMapping("/{id}/desactivar")
-    public ResponseEntity<MedicoDTO> desactivarMedico(@PathVariable Long id) {
 
-        Optional<MedicoDTO> updatedMedico = medicoService.desactivar(id);
-
-        return updatedMedico
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    // =========================
-    // ACTIVAR
-    // =========================
-    @PutMapping("/{id}/activar")
-    public ResponseEntity<MedicoDTO> activarMedico(@PathVariable Long id) {
-
-        Optional<MedicoDTO> updatedMedico = medicoService.activar(id);
-
-        return updatedMedico
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
 }

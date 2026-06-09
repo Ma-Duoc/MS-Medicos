@@ -17,5 +17,4 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
     
     boolean existsByRut(String rut);
     
-    Optional<Medico> findByActivo(Boolean activo);
 }
